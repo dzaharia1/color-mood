@@ -1,9 +1,10 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React from 'react';
+import styles from './ColorMood.module.scss';
 
 const ColorMood = ({ colorMood }) => {
     return (
-        <div>
-            <h2>{colorMood}</h2>
+        <div className={styles["colorMood"]}>
+            <input type="text" value={colorMood} />
         </div>
     );
 }

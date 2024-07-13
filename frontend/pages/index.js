@@ -7,25 +7,25 @@ import ColorPicker from '../components/ColorPicker/ColorPicker'
 import ColorMood from '../components/ColorMood/ColorMood'
 
 export default function Home() {
-  const [red, setRed] = useState(0)
-  const [green, setGreen] = useState(0)
-  const [blue, setBlue] = useState(0)
+  const redInput = useRef(255);
+  const greenInput = useRef(191);
+  const blueInput = useRef(191);
   const [colorMood, setColorMood] = useState('');
   const [color, setColor] = useState("#000000");
 
   useEffect(() => {
-    console.log(red, green, blue);
     fetchColorInfo();
-  }, [red, green, blue]);
+  }, [redInput.current.value, greenInput.current.value, blueInput.current.value]);
 
   const fetchColorInfo = useCallback(_.debounce(async () => {
-    const fetchUrl = `http://localhost:3000/color-mood?color=rgb(${red},${green},${blue})`;
+    const fetchUrl = `http://localhost:3000/color-mood?color=rgb(${redInput.current.value},${greenInput.current.value},${blueInput.current.value})`;
     console.log(fetchUrl);
     const response = await fetch(fetchUrl);
     const data = await response.json();
-    setColorMood(data.mood);
+    console.log(response);
+    setColorMood(`${data.name}:\n ${data.mood}`);
     console.log(colorMood)
-  }, 1000), [red, green, blue]);
+  }, 1000), []);
 
   return (
     <div className={styles.container}>
@@ -39,14 +39,11 @@ export default function Home() {
         < ColorPicker
           color={color}
           setColor={setColor}
-          red={red}
-          green={green}
-          blue={blue}
-          setRed={setRed}
-          setGreen={setGreen}
-          setBlue={setBlue} />
+          redInput={redInput}
+          greenInput={greenInput}
+          blueInput={blueInput} />
 
-        < ColorMood mood={colorMood} />
+        <ColorMood colorMood={colorMood} />
       </main>
     </div>
   )
