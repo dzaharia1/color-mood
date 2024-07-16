@@ -4,7 +4,8 @@ import styles from './ColorMood.module.scss';
 const ColorMood = ({ colorMood }) => {
     return (
         <div className={styles["colorMood"]}>
-            <input type="text" value={colorMood} />
+            {/* <input type="text" value={colorMood} /> */}
+            <h3>{ colorMood }</h3>
         </div>
     );
 }
